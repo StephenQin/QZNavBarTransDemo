@@ -7,16 +7,22 @@
 //
 
 #import "ViewController.h"
-
+#import "UINavigationController+QZCategory.h"
+#import "UIViewController+QZCategory.h"
+#import "SecondVc.h"
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+- (IBAction)push2NextVc:(UIButton *)sender {
+    SecondVc *vc2 = [SecondVc new];
+    [self.navigationController pushViewController:vc2 animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.title = @"导航栏透明度过渡";
 }
 
 

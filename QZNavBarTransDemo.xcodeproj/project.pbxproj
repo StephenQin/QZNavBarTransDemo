@@ -13,6 +13,10 @@
 		F086181021BE489E00A2DA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F086180F21BE489E00A2DA45 /* Assets.xcassets */; };
 		F086181321BE489E00A2DA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F086181121BE489E00A2DA45 /* LaunchScreen.storyboard */; };
 		F086181621BE489E00A2DA45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F086181521BE489E00A2DA45 /* main.m */; };
+		F086181F21BE4C9300A2DA45 /* UINavigationController+QZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F086181E21BE4C9300A2DA45 /* UINavigationController+QZCategory.m */; };
+		F086182221BE4D0500A2DA45 /* UIViewController+QZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182121BE4D0500A2DA45 /* UIViewController+QZCategory.m */; };
+		F086182521BE518600A2DA45 /* SecondVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182421BE518600A2DA45 /* SecondVc.m */; };
+		F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182721BE545B00A2DA45 /* ThirdVc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,14 @@
 		F086181221BE489E00A2DA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F086181421BE489E00A2DA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F086181521BE489E00A2DA45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F086181D21BE4C9300A2DA45 /* UINavigationController+QZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+QZCategory.h"; sourceTree = "<group>"; };
+		F086181E21BE4C9300A2DA45 /* UINavigationController+QZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+QZCategory.m"; sourceTree = "<group>"; };
+		F086182021BE4D0500A2DA45 /* UIViewController+QZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QZCategory.h"; sourceTree = "<group>"; };
+		F086182121BE4D0500A2DA45 /* UIViewController+QZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QZCategory.m"; sourceTree = "<group>"; };
+		F086182321BE518600A2DA45 /* SecondVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondVc.h; sourceTree = "<group>"; };
+		F086182421BE518600A2DA45 /* SecondVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondVc.m; sourceTree = "<group>"; };
+		F086182621BE545B00A2DA45 /* ThirdVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdVc.h; sourceTree = "<group>"; };
+		F086182721BE545B00A2DA45 /* ThirdVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdVc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +74,14 @@
 				F086180721BE489B00A2DA45 /* AppDelegate.m */,
 				F086180921BE489B00A2DA45 /* ViewController.h */,
 				F086180A21BE489B00A2DA45 /* ViewController.m */,
+				F086182321BE518600A2DA45 /* SecondVc.h */,
+				F086182421BE518600A2DA45 /* SecondVc.m */,
+				F086182621BE545B00A2DA45 /* ThirdVc.h */,
+				F086182721BE545B00A2DA45 /* ThirdVc.m */,
+				F086181D21BE4C9300A2DA45 /* UINavigationController+QZCategory.h */,
+				F086181E21BE4C9300A2DA45 /* UINavigationController+QZCategory.m */,
+				F086182021BE4D0500A2DA45 /* UIViewController+QZCategory.h */,
+				F086182121BE4D0500A2DA45 /* UIViewController+QZCategory.m */,
 				F086180C21BE489B00A2DA45 /* Main.storyboard */,
 				F086180F21BE489E00A2DA45 /* Assets.xcassets */,
 				F086181121BE489E00A2DA45 /* LaunchScreen.storyboard */,
@@ -141,7 +161,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F086182221BE4D0500A2DA45 /* UIViewController+QZCategory.m in Sources */,
+				F086181F21BE4C9300A2DA45 /* UINavigationController+QZCategory.m in Sources */,
+				F086182521BE518600A2DA45 /* SecondVc.m in Sources */,
 				F086180B21BE489B00A2DA45 /* ViewController.m in Sources */,
+				F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */,
 				F086181621BE489E00A2DA45 /* main.m in Sources */,
 				F086180821BE489B00A2DA45 /* AppDelegate.m in Sources */,
 			);
@@ -288,6 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25WU6RYM7P;
 				INFOPLIST_FILE = QZNavBarTransDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,6 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25WU6RYM7P;
 				INFOPLIST_FILE = QZNavBarTransDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
