@@ -66,17 +66,17 @@
     if (topVC != nil) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor != nil) {
-//                        [coor notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
-//                            [self dealInteractionChanges:context];
-//                        }];
+                        [coor notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
+                            [self dealInteractionChanges:context];
+                        }];
             
 //             notifyWhenInteractionChangesUsingBlock是10.0以后的api，换成notifyWhenInteractionEndsUsingBlock
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            [coor notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
-                [self dealInteractionChanges:context];
-#pragma clang diagnostic pop
-            }];
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+//            [coor notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
+//                [self dealInteractionChanges:context];
+//#pragma clang diagnostic pop
+//            }];
         }
     }
 }
@@ -102,17 +102,16 @@
 
 
 #pragma mark - UINavigationBar Delegate
-- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
-    if (self.viewControllers.count >= navigationBar.items.count) {// 点击返回按钮
-        UIViewController *popToVC = self.viewControllers[self.viewControllers.count - 1];
-        [self setNeedsNavigationBackground:[popToVC.navBarBgAlpha floatValue]];
-        //        [self popViewControllerAnimated:YES];
-    }
-}
+//- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
+//    if (self.viewControllers.count >= navigationBar.items.count) {// 点击返回按钮
+//        UIViewController *popToVC = self.viewControllers[self.viewControllers.count - 1];
+//        [self setNeedsNavigationBackground:[popToVC.navBarBgAlpha floatValue]];
+//    }
+//}
 
-- (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {
-    // push到一个新界面
-    [self setNeedsNavigationBackground:[self.topViewController.navBarBgAlpha floatValue]];
-}
+//- (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {
+//    // push到一个新界面
+//    [self setNeedsNavigationBackground:[self.topViewController.navBarBgAlpha floatValue]];
+//}
 
 @end

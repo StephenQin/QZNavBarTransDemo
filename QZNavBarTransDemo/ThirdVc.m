@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"alpha = 0.8";
-    self.view.backgroundColor = [UIColor greenColor];
+    self.view.backgroundColor = [UIColor lightGrayColor];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
