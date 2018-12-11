@@ -23,6 +23,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"1.0";
+    self.navBarTintColor = [UIColor whiteColor];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

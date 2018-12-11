@@ -11,8 +11,8 @@
 #import "UINavigationController+QZCategory.h"
 @implementation UIViewController (QZCategory)
 //定义常量 必须是C语言字符串
-static char *QZCategoryKey = "QZCategoryKey";
-
+static char *QZCategoryAlphaKey = "QZCategoryAlphaKey";
+static char *QZCategoryColorKey = "QZCategoryColorKey";
 - (void)setNavBarBgAlpha:(NSString *)navBarBgAlpha {
     /*
      OBJC_ASSOCIATION_ASSIGN;            //assign策略
@@ -30,14 +30,21 @@ static char *QZCategoryKey = "QZCategoryKey";
      objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy);
      */
     
-    objc_setAssociatedObject(self, QZCategoryKey, navBarBgAlpha, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, QZCategoryAlphaKey, navBarBgAlpha, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     // 设置导航栏透明度（利用Category自己添加的方法）
     [self.navigationController setNeedsNavigationBackground:[navBarBgAlpha floatValue]];
 }
 
 - (NSString *)navBarBgAlpha {
-    return objc_getAssociatedObject(self, QZCategoryKey) ? : @"1.0";
+    return objc_getAssociatedObject(self, QZCategoryAlphaKey) ? : @"1.0";
 }
 
+- (void)setNavBarTintColor:(UIColor *)navBarTintColor {
+    self.navigationController.navigationBar.tintColor = navBarTintColor;
+    objc_setAssociatedObject(self, QZCategoryColorKey,navBarTintColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+- (UIColor *)navBarTintColor {
+    return objc_getAssociatedObject(self, QZCategoryColorKey) ? : [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
+}
 @end

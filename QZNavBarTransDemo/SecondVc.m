@@ -30,6 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"0.0";
+    self.navBarTintColor = [UIColor whiteColor];
 }
 - (void)push2ThirdVc:(UIButton *)sender {
     ThirdVc *tVc = [ThirdVc new];
