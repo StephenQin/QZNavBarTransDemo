@@ -26,13 +26,13 @@
     CGFloat nowGreen = fromGreen + (toGreen - fromGreen) * percent;
     CGFloat nowBlue  = fromBlue  + (toBlue - fromBlue) * percent;
     CGFloat nowAlpha = fromAlpha + (toAlpha - fromAlpha) * percent;
-    NSLog(@"fromRed = %f toRed = %f fromGreen = %f toGreen = %f fromBlue = %f toBlue = %f fromAlpha = %f toAlpha = %f",fromRed,toRed,fromGreen,toGreen,fromBlue,toBlue,fromAlpha,toAlpha);
-    NSLog(@"nowRed = %f nowGreen = %f nowBlue = %f nowAlha = %f",nowRed,nowGreen,nowBlue,nowAlpha);
-    NSLog(@"percent = %f",percent);
+//    NSLog(@"fromRed = %f toRed = %f fromGreen = %f toGreen = %f fromBlue = %f toBlue = %f fromAlpha = %f toAlpha = %f",fromRed,toRed,fromGreen,toGreen,fromBlue,toBlue,fromAlpha,toAlpha);
+//    NSLog(@"nowRed = %f nowGreen = %f nowBlue = %f nowAlha = %f",nowRed,nowGreen,nowBlue,nowAlpha);
+//    NSLog(@"percent = %f",percent);
     return [UIColor colorWithRed:nowRed green:nowGreen blue:nowBlue alpha:nowAlpha];
 }
 // 设置导航栏背景透明度
-- (void)setNeedsNavigationBackground:(CGFloat)alpha {
+- (void)setNeedsNavigationBackgroundAlpha:(CGFloat)alpha {
     UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
     if (barBackgroundView) {
         UIView *shadowView = [barBackgroundView valueForKey:@"_shadowView"];
@@ -63,41 +63,53 @@
 + (void)initialize {
     if (self == [UINavigationController self]) {
         // 交换方法
-        SEL originalSelector = NSSelectorFromString(@"_updateInteractiveTransition:");
-        SEL swizzledSelector = NSSelectorFromString(@"et__updateInteractiveTransition:");
-        Method originalMethod = class_getInstanceMethod([self class], originalSelector);
-        Method swizzledMethod = class_getInstanceMethod([self class], swizzledSelector);
-        method_exchangeImplementations(originalMethod, swizzledMethod);
+        NSArray *arr = @[@"_updateInteractiveTransition:",@"popToViewController:animated:",@"popToRootViewControllerAnimated:"];
+        for (NSString *str in arr) {
+            NSString *new_str = [[@"qz_" stringByAppendingString:str] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];
+            Method A = class_getInstanceMethod(self, NSSelectorFromString(str));
+            Method B = class_getInstanceMethod(self, NSSelectorFromString(new_str));
+            method_exchangeImplementations(A, B);
+        }
     }
 }
 
 // 交换的方法，监控滑动手势
-- (void)et__updateInteractiveTransition:(CGFloat)percentComplete {
-    [self et__updateInteractiveTransition:(percentComplete)];
+- (void)qz_updateInteractiveTransition:(CGFloat)percentComplete {
     UIViewController *topVC = self.topViewController;
-    if (topVC != nil) {
+    if (topVC) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
-        if (coor != nil) {
+        if (coor) {
             UIViewController *fromViewController = [coor viewControllerForKey:UITransitionContextFromViewControllerKey];
             UIViewController *toViewController   = [coor viewControllerForKey:UITransitionContextToViewControllerKey];
             // 随着滑动的过程设置导航栏透明度渐变
-            CGFloat fromAlpha = [fromViewController.navBarBgAlpha floatValue];
-            CGFloat toAlpha   = [toViewController.navBarBgAlpha floatValue];
+            CGFloat fromAlpha = fromViewController.navBarBgAlpha;
+            CGFloat toAlpha   = toViewController.navBarBgAlpha;
             CGFloat nowAlpha  = fromAlpha + (toAlpha - fromAlpha) * percentComplete;
-            NSLog(@"from:%f, to:%f, now:%f",fromAlpha, toAlpha, nowAlpha);
-            [self setNeedsNavigationBackground:nowAlpha];
+//            NSLog(@"from:%f, to:%f, now:%f",fromAlpha, toAlpha, nowAlpha);
+            [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             // 设置Tint color
             UIColor *fromColor = fromViewController.navBarTintColor;
             UIColor *toColor   = toViewController.navBarTintColor;
             self.navigationBar.tintColor = [self setAverageColorFromColor:fromColor toColor:toColor andPercent:percentComplete];
         }
     }
+    [self qz_updateInteractiveTransition:(percentComplete)];
+}
+- (NSArray<UIViewController *> *)qz_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self setNeedsNavigationBackgroundAlpha:viewController.navBarBgAlpha];
+    self.navigationBar.tintColor = viewController.navBarTintColor;
+    return [self qz_popToViewController:viewController animated:animated];
 }
 
+- (NSArray<UIViewController *> *)qz_popToRootViewControllerAnimated:(BOOL)animated {
+    [self setNeedsNavigationBackgroundAlpha:self.viewControllers[0].navBarBgAlpha];
+    self.navigationBar.tintColor = self.viewControllers[0].navBarTintColor;
+    return [self qz_popToRootViewControllerAnimated:animated];
+}
 #pragma mark - UINavigationController Delegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     UIViewController *topVC = self.topViewController;
-    if (topVC != nil) {
+    if (topVC) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor != nil) {
             if (@available(iOS 10.0, *)) {
@@ -117,18 +129,18 @@
     if ([context isCancelled]) {// 自动取消了返回手势
         NSTimeInterval cancelDuration = [context transitionDuration] * (double)[context percentComplete];
         [UIView animateWithDuration:cancelDuration animations:^{
-            CGFloat nowAlpha = [[context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarBgAlpha floatValue];
+            CGFloat nowAlpha = [context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarBgAlpha;
             NSLog(@"自动取消返回到alpha：%f", nowAlpha);
-            [self setNeedsNavigationBackground:nowAlpha];
+            [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             self.navigationBar.tintColor = [context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarTintColor;
         }];
     } else {// 自动完成了返回手势
         NSTimeInterval finishDuration = [context transitionDuration] * (double)(1 - [context percentComplete]);
         [UIView animateWithDuration:finishDuration animations:^{
-            CGFloat nowAlpha = [[context viewControllerForKey:
-                                 UITransitionContextToViewControllerKey].navBarBgAlpha floatValue];
+            CGFloat nowAlpha = [context viewControllerForKey:
+                                 UITransitionContextToViewControllerKey].navBarBgAlpha;
             NSLog(@"自动完成返回到alpha：%f", nowAlpha);
-            [self setNeedsNavigationBackground:nowAlpha];
+            [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             self.navigationBar.tintColor = [context viewControllerForKey:UITransitionContextToViewControllerKey].navBarTintColor;
         }];
     }
@@ -158,7 +170,7 @@
     return YES;
 }
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(nonnull UINavigationItem *)item {
-    [self setNeedsNavigationBackground:[self.topViewController.navBarBgAlpha floatValue]];
+    [self setNeedsNavigationBackgroundAlpha:self.topViewController.navBarBgAlpha];
     self.navigationBar.tintColor = self.topViewController.navBarTintColor;
     return YES;
 }

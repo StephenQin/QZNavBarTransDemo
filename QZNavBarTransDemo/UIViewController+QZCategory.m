@@ -13,7 +13,7 @@
 //定义常量 必须是C语言字符串
 static char *QZCategoryAlphaKey = "QZCategoryAlphaKey";
 static char *QZCategoryColorKey = "QZCategoryColorKey";
-- (void)setNavBarBgAlpha:(NSString *)navBarBgAlpha {
+- (void)setNavBarBgAlpha:(CGFloat)navBarBgAlpha {
     /*
      OBJC_ASSOCIATION_ASSIGN;            //assign策略
      OBJC_ASSOCIATION_COPY_NONATOMIC;    //copy策略
@@ -30,14 +30,13 @@ static char *QZCategoryColorKey = "QZCategoryColorKey";
      objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy);
      */
     
-    objc_setAssociatedObject(self, QZCategoryAlphaKey, navBarBgAlpha, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
+    objc_setAssociatedObject(self, QZCategoryAlphaKey, @(navBarBgAlpha), OBJC_ASSOCIATION_COPY_NONATOMIC);
     // 设置导航栏透明度（利用Category自己添加的方法）
-    [self.navigationController setNeedsNavigationBackground:[navBarBgAlpha floatValue]];
+    [self.navigationController setNeedsNavigationBackgroundAlpha:navBarBgAlpha];
 }
 
-- (NSString *)navBarBgAlpha {
-    return objc_getAssociatedObject(self, QZCategoryAlphaKey) ? : @"1.0";
+- (CGFloat)navBarBgAlpha {
+    return [objc_getAssociatedObject(self, QZCategoryAlphaKey) floatValue];
 }
 
 - (void)setNavBarTintColor:(UIColor *)navBarTintColor {

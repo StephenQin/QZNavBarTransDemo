@@ -35,7 +35,7 @@ static NSString *cellId = @"cellId";
         if (navAlpha > 1) {
             navAlpha = 1;
         }
-        self.navBarBgAlpha = [NSString stringWithFormat:@"%f",navAlpha];
+        self.navBarBgAlpha = navAlpha;
         if (navAlpha > 0.8) {
             self.navBarTintColor = [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
             self.statusBarShouldLight = NO;
@@ -44,7 +44,7 @@ static NSString *cellId = @"cellId";
             self.statusBarShouldLight = YES;
         }
     } else {
-        self.navBarBgAlpha = @"0";
+        self.navBarBgAlpha = 0.0;
         self.navBarTintColor = [UIColor whiteColor];
         self.statusBarShouldLight = YES;
     }
@@ -75,7 +75,7 @@ static NSString *cellId = @"cellId";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navBarBgAlpha = @"0.0";
+    self.navBarBgAlpha = 0.0;
     self.navBarTintColor = [UIColor whiteColor];
     [self setupTableView];
 }

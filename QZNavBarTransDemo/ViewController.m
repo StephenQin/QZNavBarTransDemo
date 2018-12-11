@@ -17,7 +17,6 @@
 @implementation ViewController
 - (IBAction)push2NextVc:(UIButton *)sender {
     SecondVc *vc2 = [SecondVc new];
-    self.navigationController.delegate = self.navigationController;
     [self.navigationController pushViewController:vc2 animated:YES];
 }
 - (void)leftItemAction:(UIBarButtonItem *)letfItem {
@@ -28,7 +27,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBarBgAlpha = @"1.0";
+    self.navBarBgAlpha = 1.0;
     self.navBarTintColor = [UIColor blueColor];
     [self setupNav];
 }

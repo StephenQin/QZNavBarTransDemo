@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UINavigationController (QZCategory)<UINavigationBarDelegate, UINavigationControllerDelegate>
-- (void)setNeedsNavigationBackground:(CGFloat)alpha;
+- (void)setNeedsNavigationBackgroundAlpha:(CGFloat)alpha;
 @end
 
 NS_ASSUME_NONNULL_END
