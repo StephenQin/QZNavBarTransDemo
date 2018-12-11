@@ -53,7 +53,7 @@
         <!--首页-->
         <scene sceneID="W9W-R2-Wcb">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h1z-Te-VHW" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h1z-Te-VHW" customClass="QZBaseNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="首页" id="XTu-4I-oO6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z4K-BC-dgp">
@@ -72,9 +72,10 @@
         <!--Tab Bar Controller-->
         <scene sceneID="LZT-Nz-LEy">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="fr3-HA-AT0" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="fr3-HA-AT0" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EgY-eq-CkM">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

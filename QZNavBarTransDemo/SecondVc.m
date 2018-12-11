@@ -10,31 +10,89 @@
 #import "UINavigationController+QZCategory.h"
 #import "UIViewController+QZCategory.h"
 #import "ThirdVc.h"
-@interface SecondVc ()
 
+static NSString *cellId = @"cellId";
+@interface SecondVc ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, assign) BOOL statusBarShouldLight;
 @end
 
 @implementation SecondVc
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"alpha = 0.0";
-    self.view.backgroundColor = [UIColor colorWithRed:0x32/255.0f green:0xAB/255.0f blue:0x64/255.0f alpha:1.0f];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [btn setTitle:@"push" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(push2ThirdVc:) forControlEvents:UIControlEventTouchUpInside];
-    btn.center = self.view.center;
-    btn.bounds = CGRectMake(0, 0, 80, 35);
-    [self.view addSubview:btn];
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    if (self.statusBarShouldLight) {
+        return UIStatusBarStyleLightContent;
+    } else {
+        return UIStatusBarStyleDefault;
+    }
 }
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"0.0";
-    self.navBarTintColor = [UIColor whiteColor];
+#pragma mark ————— UITableViewDelegate,UITableViewDataSource —————
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat contentOffsetY = scrollView.contentOffset.y;
+    CGFloat showNavBarOffsetY = 200 - self.topLayoutGuide.length;
+    if (contentOffsetY > showNavBarOffsetY) {
+        CGFloat navAlpha = (contentOffsetY - (showNavBarOffsetY)) / 40.0;
+        if (navAlpha > 1) {
+            navAlpha = 1;
+        }
+        self.navBarBgAlpha = [NSString stringWithFormat:@"%f",navAlpha];
+        if (navAlpha > 0.8) {
+            self.navBarTintColor = [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
+            self.statusBarShouldLight = NO;
+        } else {
+            self.navBarTintColor = [UIColor whiteColor];
+            self.statusBarShouldLight = YES;
+        }
+    } else {
+        self.navBarBgAlpha = @"0";
+        self.navBarTintColor = [UIColor whiteColor];
+        self.statusBarShouldLight = YES;
+    }
+    [self setNeedsStatusBarAppearanceUpdate];
 }
-- (void)push2ThirdVc:(UIButton *)sender {
-    ThirdVc *tVc = [ThirdVc new];
-    [self.navigationController pushViewController:tVc animated:YES];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 30;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SecondVc *seVc = [[SecondVc alloc] init];
+    [self.navigationController pushViewController:seVc animated:YES];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [UIView new];
+    headerView.backgroundColor = [UIColor purpleColor];
+    return headerView;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 200;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navBarBgAlpha = @"0.0";
+    self.navBarTintColor = [UIColor whiteColor];
+    [self setupTableView];
+}
+- (void)setupTableView {
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellId];
+    self.tableView.backgroundColor = [UIColor blueColor];
+}
+
+#pragma mark ————— lazyLoad —————
+- (UITableView *)tableView {
+    if (!_tableView) {
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        [self.view addSubview:tableView];
+        _tableView = tableView;
+    }
+    return _tableView;
+}
 @end

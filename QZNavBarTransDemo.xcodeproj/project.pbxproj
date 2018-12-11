@@ -17,6 +17,7 @@
 		F086182221BE4D0500A2DA45 /* UIViewController+QZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182121BE4D0500A2DA45 /* UIViewController+QZCategory.m */; };
 		F086182521BE518600A2DA45 /* SecondVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182421BE518600A2DA45 /* SecondVc.m */; };
 		F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182721BE545B00A2DA45 /* ThirdVc.m */; };
+		F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,8 @@
 		F086182421BE518600A2DA45 /* SecondVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondVc.m; sourceTree = "<group>"; };
 		F086182621BE545B00A2DA45 /* ThirdVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdVc.h; sourceTree = "<group>"; };
 		F086182721BE545B00A2DA45 /* ThirdVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdVc.m; sourceTree = "<group>"; };
+		F086182C21BFAD0700A2DA45 /* QZBaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZBaseNavigationController.h; sourceTree = "<group>"; };
+		F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBaseNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				F086181121BE489E00A2DA45 /* LaunchScreen.storyboard */,
 				F086181421BE489E00A2DA45 /* Info.plist */,
 				F086181521BE489E00A2DA45 /* main.m */,
+				F086182C21BFAD0700A2DA45 /* QZBaseNavigationController.h */,
+				F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */,
 			);
 			path = QZNavBarTransDemo;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F086182221BE4D0500A2DA45 /* UIViewController+QZCategory.m in Sources */,
+				F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */,
 				F086181F21BE4C9300A2DA45 /* UINavigationController+QZCategory.m in Sources */,
 				F086182521BE518600A2DA45 /* SecondVc.m in Sources */,
 				F086180B21BE489B00A2DA45 /* ViewController.m in Sources */,

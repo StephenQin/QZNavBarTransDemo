@@ -162,4 +162,11 @@
     self.navigationBar.tintColor = self.topViewController.navBarTintColor;
     return YES;
 }
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.topViewController;
+}
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    return self.topViewController;
+}
 @end
