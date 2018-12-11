@@ -48,7 +48,7 @@
                     return;
                 };
             } else {
-                UIView *adaptiveBackdrop = [barBackgroundView valueForKey:@"_backgroundEffectView"];
+                UIView *adaptiveBackdrop = [barBackgroundView valueForKey:@"_adaptiveBackdrop"];
                 UIView *backdropEffectView = [adaptiveBackdrop valueForKey:@"_backdropEffectView"];
                 if (adaptiveBackdrop && backdropEffectView) {
                     backdropEffectView.alpha = alpha;
