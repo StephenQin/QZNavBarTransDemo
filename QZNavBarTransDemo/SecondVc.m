@@ -8,7 +8,6 @@
 
 #import "SecondVc.h"
 #import "UINavigationController+QZCategory.h"
-#import "UIViewController+QZCategory.h"
 #import "ThirdVc.h"
 
 static NSString *cellId = @"cellId";

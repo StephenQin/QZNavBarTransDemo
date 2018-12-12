@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "UINavigationController+QZCategory.h"
-#import "UIViewController+QZCategory.h"
 #import "SecondVc.h"
 @interface ViewController ()
 

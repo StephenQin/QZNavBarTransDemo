@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UINavigationController (QZCategory)<UINavigationBarDelegate, UINavigationControllerDelegate>
-- (void)setNeedsNavigationBackgroundAlpha:(CGFloat)alpha;
 @end
-
+@interface UIViewController (QZCategory)
+@property (assign, nonatomic) CGFloat navBarBgAlpha;
+@property (nonatomic, strong) UIColor *navBarTintColor;
+@end
 NS_ASSUME_NONNULL_END

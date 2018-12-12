@@ -8,7 +8,7 @@
 
 #import "ThirdVc.h"
 #import "UINavigationController+QZCategory.h"
-#import "UIViewController+QZCategory.h"
+//#import "UIViewController+QZCategory.h"
 @interface ThirdVc ()
 
 @end
