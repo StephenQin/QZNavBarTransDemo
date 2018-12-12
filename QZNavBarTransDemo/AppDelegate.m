@@ -7,16 +7,25 @@
 //
 
 #import "AppDelegate.h"
-
+#import "QZTabBarController.h"
 @interface AppDelegate ()
-
+@property (strong, nonatomic) QZTabBarController *mainTabBar;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.mainTabBar = [QZTabBarController new];
+    self.window.rootViewController = self.mainTabBar;
+    [self.window makeKeyAndVisible];
+    [[UIButton appearance] setExclusiveTouch:YES];// 防止同时点击多个btn同时相应多个事件；
+    [[UIButton appearance] setShowsTouchWhenHighlighted:YES];
+    if (@available(iOS 11.0, *)){
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    }
     return YES;
 }
 

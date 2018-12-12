@@ -15,21 +15,23 @@
 @end
 
 @implementation ViewController
-- (IBAction)push2NextVc:(UIButton *)sender {
-    SecondVc *vc2 = [SecondVc new];
-    [self.navigationController pushViewController:vc2 animated:YES];
-}
 - (void)leftItemAction:(UIBarButtonItem *)letfItem {
     NSLog(@"左边");
 }
 - (void)rightItemAction:(UIBarButtonItem *)rightItem {
     NSLog(@"右边");
+    SecondVc *vc2 = [SecondVc new];
+    [self.navigationController pushViewController:vc2 animated:YES];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navBarBgAlpha = 1.0;
     self.navBarTintColor = [UIColor blueColor];
     [self setupNav];
+    [self setupUI];
+}
+- (void)setupUI {
+    
 }
 - (void)setupNav {
     self.title = @"导航栏透明度过渡";

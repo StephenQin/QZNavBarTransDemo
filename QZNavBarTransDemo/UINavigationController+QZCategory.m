@@ -26,13 +26,11 @@
     CGFloat nowGreen = fromGreen + (toGreen - fromGreen) * percent;
     CGFloat nowBlue  = fromBlue  + (toBlue - fromBlue) * percent;
     CGFloat nowAlpha = fromAlpha + (toAlpha - fromAlpha) * percent;
-//    NSLog(@"fromRed = %f toRed = %f fromGreen = %f toGreen = %f fromBlue = %f toBlue = %f fromAlpha = %f toAlpha = %f",fromRed,toRed,fromGreen,toGreen,fromBlue,toBlue,fromAlpha,toAlpha);
-//    NSLog(@"nowRed = %f nowGreen = %f nowBlue = %f nowAlha = %f",nowRed,nowGreen,nowBlue,nowAlpha);
-//    NSLog(@"percent = %f",percent);
     return [UIColor colorWithRed:nowRed green:nowGreen blue:nowBlue alpha:nowAlpha];
 }
 // 设置导航栏背景透明度
 - (void)setNeedsNavigationBackgroundAlpha:(CGFloat)alpha {
+    if ([self.navigationBar subviews].count == 0) {return;}
     UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
     if (barBackgroundView) {
         UIView *shadowView = [barBackgroundView valueForKey:@"_shadowView"];
@@ -85,7 +83,6 @@
             CGFloat fromAlpha = fromViewController.navBarBgAlpha;
             CGFloat toAlpha   = toViewController.navBarBgAlpha;
             CGFloat nowAlpha  = fromAlpha + (toAlpha - fromAlpha) * percentComplete;
-//            NSLog(@"from:%f, to:%f, now:%f",fromAlpha, toAlpha, nowAlpha);
             [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             // 设置Tint color
             UIColor *fromColor = fromViewController.navBarTintColor;
