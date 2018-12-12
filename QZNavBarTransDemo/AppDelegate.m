@@ -23,6 +23,7 @@
     [self.window makeKeyAndVisible];
     [[UIButton appearance] setExclusiveTouch:YES];// 防止同时点击多个btn同时相应多个事件；
     [[UIButton appearance] setShowsTouchWhenHighlighted:YES];
+    [UITabBar appearance].translucent = NO;
     if (@available(iOS 11.0, *)){
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
     }
