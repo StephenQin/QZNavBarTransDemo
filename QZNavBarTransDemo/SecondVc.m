@@ -65,12 +65,31 @@ static NSString *cellId = @"cellId";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     headerView.backgroundColor = [UIColor purpleColor];
+    NSInteger x1 = [UIScreen mainScreen].bounds.size.width / 2 - 120;
+    NSInteger x2 = [UIScreen mainScreen].bounds.size.width / 2 + 20;
+    UIButton *backBtn          = [[UIButton alloc] initWithFrame:CGRectMake(x1, 100, 100, 40)];
+    UIButton *backToRootBtn    = [[UIButton alloc] initWithFrame:CGRectMake(x2, 100, 100, 40)];
+    [backBtn setTitle:@"pop" forState:UIControlStateNormal];
+    [backToRootBtn setTitle:@"pop2root" forState:UIControlStateNormal];
+    [backBtn       setBackgroundColor:[UIColor redColor]];
+    [backToRootBtn setBackgroundColor:[UIColor redColor]];
+    backBtn.titleLabel.textColor       = [UIColor whiteColor];
+    backToRootBtn.titleLabel.textColor = [UIColor whiteColor];
+    [backBtn addTarget:self action:@selector(backBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [backToRootBtn addTarget:self action:@selector(backToRootBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:backBtn];
+    [headerView addSubview:backToRootBtn];
     return headerView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 200;
 }
-
+- (void)backBtnAction:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)backToRootBtnAction:(UIButton *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -82,7 +101,6 @@ static NSString *cellId = @"cellId";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellId];
     self.tableView.backgroundColor = [UIColor blueColor];
 }
-
 #pragma mark ————— lazyLoad —————
 - (UITableView *)tableView {
     if (!_tableView) {
