@@ -15,5 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIViewController (QZCategory)
 @property (assign, nonatomic) CGFloat navBarBgAlpha;
 @property (nonatomic, strong) UIColor *navBarTintColor;
+@property (nonatomic, strong) UIColor *navTitleColor;
 @end
 NS_ASSUME_NONNULL_END

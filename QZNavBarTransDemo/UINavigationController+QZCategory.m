@@ -9,7 +9,7 @@
 #import "UINavigationController+QZCategory.h"
 #import <objc/runtime.h>
 @implementation UINavigationController (QZCategory)
-// 设置导航栏的颜色
+// 设置导航栏的tintcolor
 - (UIColor *)setAverageColorFromColor:(UIColor *)fromColor toColor:(UIColor *)toColor andPercent:(CGFloat)percent {
     CGFloat fromRed   = 0.0;
     CGFloat fromGreen = 0.0;
@@ -94,31 +94,15 @@
 - (NSArray<UIViewController *> *)qz_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self setNeedsNavigationBackgroundAlpha:viewController.navBarBgAlpha];
     self.navigationBar.tintColor = viewController.navBarTintColor;
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:viewController.navTitleColor};
     return [self qz_popToViewController:viewController animated:animated];
 }
 
 - (NSArray<UIViewController *> *)qz_popToRootViewControllerAnimated:(BOOL)animated {
     [self setNeedsNavigationBackgroundAlpha:self.viewControllers[0].navBarBgAlpha];
     self.navigationBar.tintColor = self.viewControllers[0].navBarTintColor;
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:self.viewControllers[0].navTitleColor};
     return [self qz_popToRootViewControllerAnimated:animated];
-}
-#pragma mark - UINavigationController Delegate
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    UIViewController *topVC = self.topViewController;
-    if (topVC) {
-        id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
-        if (coor != nil) {
-            if (@available(iOS 10.0, *)) {
-                [coor notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-                    [self dealInteractionChanges:context];
-                }];
-            } else {
-                [coor notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
-                    [self dealInteractionChanges:context];
-                }];
-            }
-        }
-    }
 }
 
 - (void)dealInteractionChanges:(id<UIViewControllerTransitionCoordinatorContext>)context {
@@ -170,7 +154,10 @@
     self.navigationBar.tintColor = self.topViewController.navBarTintColor;
     return YES;
 }
-
+- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
+    UIViewController *topVc = self.topViewController;
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:topVc.navTitleColor};
+}
 - (UIViewController *)childViewControllerForStatusBarStyle {
     return self.topViewController;
 }
@@ -181,8 +168,9 @@
 
 @implementation UIViewController (QZCategory)
 //定义常量 必须是C语言字符串
-static char *QZCategoryAlphaKey = "QZCategoryAlphaKey";
-static char *QZCategoryColorKey = "QZCategoryColorKey";
+static char *QZCategoryAlphaKey      = "QZCategoryAlphaKey";
+static char *QZCategoryTintColorKey  = "QZCategoryTintColorKey";
+static char *QZCategoryTitleColorKey = "QZCategoryTitleColorKey";
 - (void)setNavBarBgAlpha:(CGFloat)navBarBgAlpha {
     /*
      OBJC_ASSOCIATION_ASSIGN;            //assign策略
@@ -204,16 +192,21 @@ static char *QZCategoryColorKey = "QZCategoryColorKey";
     // 设置导航栏透明度（利用Category自己添加的方法）
     [self.navigationController setNeedsNavigationBackgroundAlpha:navBarBgAlpha];
 }
-
 - (CGFloat)navBarBgAlpha {
     return [objc_getAssociatedObject(self, QZCategoryAlphaKey) floatValue];
 }
-
 - (void)setNavBarTintColor:(UIColor *)navBarTintColor {
     self.navigationController.navigationBar.tintColor = navBarTintColor;
-    objc_setAssociatedObject(self, QZCategoryColorKey,navBarTintColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, QZCategoryTintColorKey,navBarTintColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 - (UIColor *)navBarTintColor {
-    return objc_getAssociatedObject(self, QZCategoryColorKey) ? : [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
+    return objc_getAssociatedObject(self, QZCategoryTintColorKey) ? : [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
+}
+- (void)setNavTitleColor:(UIColor *)navTitleColor {
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:navTitleColor};
+    objc_setAssociatedObject(self, QZCategoryTitleColorKey, navTitleColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+- (UIColor *)navTitleColor {
+    return objc_getAssociatedObject(self, QZCategoryTitleColorKey) ? : [UIColor blackColor];
 }
 @end

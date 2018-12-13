@@ -28,8 +28,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBarBgAlpha = 1.0;
-    self.navBarTintColor = [UIColor blueColor];
     [self setupNav];
     [self setupUI];
 }
@@ -44,10 +42,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor blackColor]};
+    self.navTitleColor = [UIColor blackColor];
 }
 - (void)setupNav {
     self.title = @"导航栏透明度过渡";
+    self.navBarBgAlpha = 1.0;
+    self.navBarTintColor = [UIColor blueColor];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:@"left" style:UIBarButtonItemStylePlain target:self action:@selector(leftItemAction:)];
      UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"right" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemAction:)];
     self.navigationItem.leftBarButtonItem  = leftItem;

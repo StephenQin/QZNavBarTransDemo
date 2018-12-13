@@ -37,23 +37,24 @@ static NSString *cellId = @"cellId";
     CGFloat contentOffsetY = scrollView.contentOffset.y;
     CGFloat showNavBarOffsetY = 200 - self.topLayoutGuide.length;
     if (contentOffsetY > showNavBarOffsetY) {
-        CGFloat navAlpha = (contentOffsetY - (showNavBarOffsetY)) / 40.0;
+        CGFloat navAlpha = (contentOffsetY - showNavBarOffsetY) / 40.0;
         if (navAlpha > 1) {
             navAlpha = 1;
         }
         self.navBarBgAlpha = navAlpha;
         if (navAlpha > 0.8) {
             self.navBarTintColor = [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
-            self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0]};
+            self.navTitleColor   = [UIColor colorWithRed:0.0 green:0.478431 blue:1.0 alpha:1.0];
             self.statusBarShouldLight = NO;
         } else {
             self.navBarTintColor = [UIColor whiteColor];
-            self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor whiteColor]};
+            self.navTitleColor   = [UIColor whiteColor];
             self.statusBarShouldLight = YES;
         }
     } else {
-        self.navBarBgAlpha = 0.0;
+        self.navBarBgAlpha   = 0.0;
         self.navBarTintColor = [UIColor whiteColor];
+        self.navTitleColor   = [UIColor whiteColor];
         self.statusBarShouldLight = YES;
     }
     [self setNeedsStatusBarAppearanceUpdate];
@@ -114,8 +115,8 @@ static NSString *cellId = @"cellId";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navBarTintColor = [UIColor whiteColor]; // 此处改变的是tintColor 会百变标题和item颜色
+    self.navTitleColor = [UIColor whiteColor];
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.000 green:0.800 blue:0.800 alpha:1.000]]; // 此处改变的是BarTintColor
-    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor whiteColor]};
     [self setupTableView];
     UIView *navBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,kScreenWidth, kNavigationHeight)];
     navBgView.backgroundColor = kRandomColor;
