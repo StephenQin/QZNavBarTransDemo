@@ -19,7 +19,11 @@
 }
 - (void)rightItemAction:(UIBarButtonItem *)rightItem {
     NSLog(@"右边");
+    [self pushBtnAction:nil];
+}
+- (void)pushBtnAction:(UIButton *)sender {
     SecondVc *vc2 = [SecondVc new];
+    vc2.page = 0;
     [self.navigationController pushViewController:vc2 animated:YES];
 }
 - (void)viewDidLoad {
@@ -30,7 +34,17 @@
     [self setupUI];
 }
 - (void)setupUI {
-    
+    UIButton *pushBtn = [UIButton new];
+    [pushBtn setTitle:@"push" forState:UIControlStateNormal];
+    pushBtn.backgroundColor = [UIColor purpleColor];
+    [pushBtn addTarget:self action:@selector(pushBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    pushBtn.bounds = CGRectMake(0, 0, 100, 50);
+    pushBtn.center = self.view.center;
+    [self.view addSubview:pushBtn];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor blackColor]};
 }
 - (void)setupNav {
     self.title = @"导航栏透明度过渡";

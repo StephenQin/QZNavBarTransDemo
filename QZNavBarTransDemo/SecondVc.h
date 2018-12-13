@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SecondVc : UIViewController
-
+@property (nonatomic, assign) NSInteger page;
 @end
 
 NS_ASSUME_NONNULL_END
