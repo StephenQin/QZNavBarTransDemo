@@ -163,12 +163,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */,
 				F086183121C0B0B000A2DA45 /* QZTabBarController.m in Sources */,
 				F086181F21BE4C9300A2DA45 /* UINavigationController+QZCategory.m in Sources */,
+				F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */,
+				F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */,
 				F086182521BE518600A2DA45 /* SecondVc.m in Sources */,
 				F086180B21BE489B00A2DA45 /* ViewController.m in Sources */,
-				F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */,
 				F086181621BE489E00A2DA45 /* main.m in Sources */,
 				F086180821BE489B00A2DA45 /* AppDelegate.m in Sources */,
 			);

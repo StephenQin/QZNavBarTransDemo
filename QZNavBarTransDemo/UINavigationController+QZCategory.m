@@ -56,19 +56,28 @@
         barBackgroundView.alpha = alpha;
     }
 }
-
-+ (void)initialize {
-    if (self == [UINavigationController self]) {
-        // 交换方法
-        NSArray *arr = @[@"_updateInteractiveTransition:",@"popToViewController:animated:",@"popToRootViewControllerAnimated:"];
-        for (NSString *str in arr) {
-            NSString *new_str = [[@"qz_" stringByAppendingString:str] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];
-            Method A = class_getInstanceMethod(self, NSSelectorFromString(str));
-            Method B = class_getInstanceMethod(self, NSSelectorFromString(new_str));
-            method_exchangeImplementations(A, B);
-        }
++ (void)load {
+    // 交换方法
+    NSArray *arr = @[@"_updateInteractiveTransition:",@"popToViewController:animated:",@"popToRootViewControllerAnimated:"];
+    for (NSString *str in arr) {
+        NSString *new_str = [[@"qz_" stringByAppendingString:str] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];
+        Method A = class_getInstanceMethod(self, NSSelectorFromString(str));
+        Method B = class_getInstanceMethod(self, NSSelectorFromString(new_str));
+        method_exchangeImplementations(A, B);
     }
 }
+//+ (void)initialize {
+//    if (self == [UINavigationController self]) {
+//        // 交换方法
+//        NSArray *arr = @[@"_updateInteractiveTransition:",@"popToViewController:animated:",@"popToRootViewControllerAnimated:"];
+//        for (NSString *str in arr) {
+//            NSString *new_str = [[@"qz_" stringByAppendingString:str] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];
+//            Method A = class_getInstanceMethod(self, NSSelectorFromString(str));
+//            Method B = class_getInstanceMethod(self, NSSelectorFromString(new_str));
+//            method_exchangeImplementations(A, B);
+//        }
+//    }
+//}
 
 // 交换的方法，监控滑动手势
 - (void)qz_updateInteractiveTransition:(CGFloat)percentComplete {
