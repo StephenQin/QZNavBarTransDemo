@@ -13,8 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UINavigationController (QZCategory)<UINavigationBarDelegate, UINavigationControllerDelegate>
 @end
 @interface UIViewController (QZCategory)
+
+/** 导航栏背景透明度*/
 @property (assign, nonatomic) CGFloat navBarBgAlpha;
+
+/** 文字和图标的颜色*/
 @property (nonatomic, strong) UIColor *navBarTintColor;
+
+/** 标题颜色*/
 @property (nonatomic, strong) UIColor *navTitleColor;
 @end
 NS_ASSUME_NONNULL_END
