@@ -16,11 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 导航栏背景透明度*/
 @property (assign, nonatomic) CGFloat navBarBgAlpha;
-
 /** 文字和图标的颜色*/
 @property (nonatomic, strong) UIColor *navBarTintColor;
-
 /** 标题颜色*/
 @property (nonatomic, strong) UIColor *navTitleColor;
+/** 导航栏分割线显隐,不设置的话默认显示*/
+@property (assign, nonatomic) BOOL showNavShadowLine;
 @end
 NS_ASSUME_NONNULL_END

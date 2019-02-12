@@ -8,6 +8,15 @@
 
 #import "UINavigationController+QZCategory.h"
 #import <objc/runtime.h>
+
+#define IOS(n) [[[UIDevice currentDevice]systemVersion] floatValue] >= n
+#ifdef DEBUG
+#define QZLog(FORMAT, ...) fprintf(stderr, "%s:%d\t%s\n", [[[NSString stringWithUTF8String: __FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat: FORMAT, ## __VA_ARGS__] UTF8String]);
+#else
+#define QZLog(FORMAT, ...) nil
+#endif
+// 记录目标Vc
+static UIViewController *targetVc;
 @implementation UINavigationController (QZCategory)
 // 设置导航栏的tintcolor
 - (UIColor *)setAverageColorFromColor:(UIColor *)fromColor toColor:(UIColor *)toColor andPercent:(CGFloat)percent {
@@ -34,8 +43,12 @@
     if (barBackgroundView) {
         UIView *shadowView = [barBackgroundView valueForKey:@"_shadowView"];
         if (shadowView) {
-            shadowView.alpha = alpha;
-            shadowView.hidden = alpha == 0;
+            if (targetVc.showNavShadowLine) {
+                shadowView.alpha = alpha;
+                shadowView.hidden = alpha == 0;
+            } else {
+                shadowView.hidden = YES;
+            }
         }
         if (self.navigationBar.isTranslucent) {
             if (@available(iOS 10.0, *)) {
@@ -105,6 +118,7 @@
     [self qz_updateInteractiveTransition:(percentComplete)];
 }
 - (NSArray<UIViewController *> *)qz_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    targetVc = viewController;
     [self setNeedsNavigationBackgroundAlpha:viewController.navBarBgAlpha];
     self.navigationBar.tintColor = viewController.navBarTintColor;
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:viewController.navTitleColor};
@@ -112,7 +126,8 @@
 }
 
 - (NSArray<UIViewController *> *)qz_popToRootViewControllerAnimated:(BOOL)animated {
-    [self setNeedsNavigationBackgroundAlpha:self.viewControllers[0].navBarBgAlpha];
+    targetVc = self.viewControllers[0];
+    [self setNeedsNavigationBackgroundAlpha:targetVc.navBarBgAlpha];
     self.navigationBar.tintColor = self.viewControllers[0].navBarTintColor;
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:self.viewControllers[0].navTitleColor};
     return [self qz_popToRootViewControllerAnimated:animated];
@@ -120,19 +135,21 @@
 
 - (void)dealInteractionChanges:(id<UIViewControllerTransitionCoordinatorContext>)context {
     if ([context isCancelled]) {// 自动取消了返回手势
+        targetVc = targetVc;
         NSTimeInterval cancelDuration = [context transitionDuration] * (double)[context percentComplete];
         [UIView animateWithDuration:cancelDuration animations:^{
             CGFloat nowAlpha = [context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarBgAlpha;
-            NSLog(@"自动取消返回到alpha：%f", nowAlpha);
+            QZLog(@"自动取消返回到alpha：%f", nowAlpha);
             [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             self.navigationBar.tintColor = [context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarTintColor;
         }];
     } else {// 自动完成了返回手势
+        targetVc = self.topViewController;
         NSTimeInterval finishDuration = [context transitionDuration] * (double)(1 - [context percentComplete]);
         [UIView animateWithDuration:finishDuration animations:^{
             CGFloat nowAlpha = [context viewControllerForKey:
                                  UITransitionContextToViewControllerKey].navBarBgAlpha;
-            NSLog(@"自动完成返回到alpha：%f", nowAlpha);
+            QZLog(@"自动完成返回到alpha：%f", nowAlpha);
             [self setNeedsNavigationBackgroundAlpha:nowAlpha];
             self.navigationBar.tintColor = [context viewControllerForKey:UITransitionContextToViewControllerKey].navBarTintColor;
         }];
@@ -141,7 +158,7 @@
 
 
 #pragma mark - UINavigationBar Delegate
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item { // 此处右滑返回也走
     UIViewController *topVc = self.topViewController;
     id<UIViewControllerTransitionCoordinator> coor = topVc.transitionCoordinator;
     if (self.topViewController && coor && coor.initiallyInteractive) {
@@ -163,9 +180,13 @@
     return YES;
 }
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(nonnull UINavigationItem *)item {
+    targetVc = self.topViewController;
     [self setNeedsNavigationBackgroundAlpha:self.topViewController.navBarBgAlpha];
     self.navigationBar.tintColor = self.topViewController.navBarTintColor;
     return YES;
+}
+- (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {
+    targetVc = self.topViewController;
 }
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
     UIViewController *topVc = self.topViewController;
@@ -179,6 +200,32 @@
 }
 @end
 
+@interface UINavigationBar (QZCategory)
+/** 导航栏分割线显隐*/
+@property (assign, nonatomic) BOOL showNavShadowLine;
+@end
+@implementation UINavigationBar (QZCategory)
+static char *QZCategoryShowNavShadowLineKey = "QZCategoryShowNavShadowLineKey";
+- (BOOL)showNavShadowLine {
+    if (objc_getAssociatedObject(self, QZCategoryShowNavShadowLineKey) == nil) {
+        return YES;
+    }
+    return [objc_getAssociatedObject(self, QZCategoryShowNavShadowLineKey) boolValue];
+}
+- (void)setShowNavShadowLine:(BOOL)showNavShadowLine {
+    if (self.subviews.count == 0) {return;}
+    UIView *barBackground = self.subviews[0];
+    /// 黑线
+    UIImageView *shadowView = [barBackground valueForKey:@"_shadowView"];
+    if (IOS(11)) {
+        shadowView.hidden = !showNavShadowLine;
+    } else {
+        shadowView.alpha = showNavShadowLine;
+    }
+    objc_setAssociatedObject(self, QZCategoryShowNavShadowLineKey, @(showNavShadowLine), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
 @implementation UIViewController (QZCategory)
 //定义常量 必须是C语言字符串
 static char *QZCategoryAlphaKey      = "QZCategoryAlphaKey";
@@ -221,5 +268,15 @@ static char *QZCategoryTitleColorKey = "QZCategoryTitleColorKey";
 }
 - (UIColor *)navTitleColor {
     return objc_getAssociatedObject(self, QZCategoryTitleColorKey) ? : [UIColor blackColor];
+}
+- (BOOL)showNavShadowLine {
+    if (objc_getAssociatedObject(self, QZCategoryShowNavShadowLineKey) == nil) {
+        return YES;
+    }
+    return [objc_getAssociatedObject(self, QZCategoryShowNavShadowLineKey) boolValue];
+}
+- (void)setShowNavShadowLine:(BOOL)showNavShadowLine {
+    self.navigationController.navigationBar.showNavShadowLine = showNavShadowLine;
+    objc_setAssociatedObject(self, QZCategoryShowNavShadowLineKey, @(showNavShadowLine), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 @end

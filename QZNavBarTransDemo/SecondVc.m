@@ -66,6 +66,8 @@ static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (indexPath.row <= 10) {
         cell.textLabel.text = [NSString stringWithFormat:@"导航栏alpha为0.%zd，并带有随机色的导航背景",indexPath.row];
+    } else if (indexPath.row == 11) {
+        cell.textLabel.text = @"导航栏alpha为0,没有线，没有导航背景";
     } else {
         cell.textLabel.text = @"导航栏alpha为0,没有导航背景";
     }
@@ -163,7 +165,12 @@ static NSString *cellId = @"cellId";
             break;
         case 10:
             self.navBarBgAlpha = 1.0;
+            self.showNavShadowLine = NO;
             [self.view addSubview:navBgView];
+            break;
+        case 11:
+            self.navBarBgAlpha = 0.0;
+            self.showNavShadowLine = NO;
             break;
         default:
             self.navBarBgAlpha = 0.0;

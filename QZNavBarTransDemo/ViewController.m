@@ -48,6 +48,7 @@
     self.title = @"导航栏透明度过渡";
     self.navBarBgAlpha = 1.0;
     self.navBarTintColor = [UIColor blueColor];
+    self.showNavShadowLine = NO;
     [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"编辑"]];
     [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"编辑"]];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
