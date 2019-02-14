@@ -8,6 +8,7 @@
 
 #import "QZTabBarController.h"
 #import "QZBaseNavigationController.h"
+#import "QZFullBackNavigationController.h"
 #import "ViewController.h"
 #import "ThirdVc.h"
 @interface QZTabBarController ()
@@ -26,19 +27,15 @@
 - (void)setupChildVcs {
     
     // 消息
-    UINavigationController *vc1 = [self navWithClassName:@"ViewController" title:@"首页" imageName:@"home_normal" andSelectedImageName:@"home_selected"];
-    UINavigationController *vc2 = [self navWithClassName:@"ThirdVc" title:@"商城" imageName:@"goods_normal" andSelectedImageName:@"goods_selected"];
-//    UINavigationController *vc3 = [self navWithClassName:@"FFFindViewController" title:@"发现" imageName:@"find_normal" andSelectedImageName:@"find_selected"];
-//    UINavigationController *vc4 = [self navWithClassName:@"FFShoppingCartViewController" title:@"购物车" imageName:@"shoppingcart_normal" andSelectedImageName:@"shoppingcart_selected"];
-//    UINavigationController *vc5 = [self navWithClassName:@"FFMineViewController" title:@"我的" imageName:@"mine_normal" andSelectedImageName:@"mine_selected"];
-    
-    // 5.设置标签vc的子控制器
+    UINavigationController *vc1 = [self navWithClassName:@"ViewController" title:@"首页" imageName:@"home_normal" andSelectedImageName:@"home_selected" isFullBack:NO];
+    UINavigationController *vc2 = [self navWithClassName:@"ThirdVc" title:@"商城" imageName:@"goods_normal" andSelectedImageName:@"goods_selected" isFullBack:YES];
+    // 设置标签vc的子控制器
     self.viewControllers = @[vc1,vc2];
     
 }
 
 #pragma mark - 负责创建vc的方法
-- (UINavigationController *)navWithClassName:(NSString *)clsName  title:(NSString *)title imageName:(NSString *)imgName andSelectedImageName:(NSString *)selectedImageName {
+- (UINavigationController *)navWithClassName:(NSString *)clsName  title:(NSString *)title imageName:(NSString *)imgName andSelectedImageName:(NSString *)selectedImageName isFullBack:(BOOL)fullBack{
     
     Class cls = NSClassFromString(clsName);
     UIViewController *vc = [[cls alloc] init];
@@ -52,6 +49,10 @@
     vc.title = title;
     vc.tabBarItem.image = [UIImage imageNamed:imgName];
     vc.tabBarItem.selectedImage = [[UIImage imageNamed:selectedImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    if (fullBack) {
+        QZFullBackNavigationController *nav = [[QZFullBackNavigationController alloc] initWithRootViewController:vc];
+        return nav;
+    }
     UINavigationController *nav = [[QZBaseNavigationController alloc] initWithRootViewController:vc];
     return nav;
 }

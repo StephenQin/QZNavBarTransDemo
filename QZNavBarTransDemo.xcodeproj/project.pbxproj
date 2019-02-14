@@ -17,6 +17,7 @@
 		F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182721BE545B00A2DA45 /* ThirdVc.m */; };
 		F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */; };
 		F086183121C0B0B000A2DA45 /* QZTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F086183021C0B0AF00A2DA45 /* QZTabBarController.m */; };
+		F0C11F632214FB9A0007DD19 /* QZFullBackNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C11F622214FB9A0007DD19 /* QZFullBackNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBaseNavigationController.m; sourceTree = "<group>"; };
 		F086182F21C0B0AF00A2DA45 /* QZTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZTabBarController.h; sourceTree = "<group>"; };
 		F086183021C0B0AF00A2DA45 /* QZTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZTabBarController.m; sourceTree = "<group>"; };
+		F0C11F612214FB9A0007DD19 /* QZFullBackNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZFullBackNavigationController.h; sourceTree = "<group>"; };
+		F0C11F622214FB9A0007DD19 /* QZFullBackNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZFullBackNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				F086181521BE489E00A2DA45 /* main.m */,
 				F086182C21BFAD0700A2DA45 /* QZBaseNavigationController.h */,
 				F086182D21BFAD0700A2DA45 /* QZBaseNavigationController.m */,
+				F0C11F612214FB9A0007DD19 /* QZFullBackNavigationController.h */,
+				F0C11F622214FB9A0007DD19 /* QZFullBackNavigationController.m */,
 			);
 			path = QZNavBarTransDemo;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				F086182E21BFAD0700A2DA45 /* QZBaseNavigationController.m in Sources */,
 				F086182821BE545B00A2DA45 /* ThirdVc.m in Sources */,
 				F086182521BE518600A2DA45 /* SecondVc.m in Sources */,
+				F0C11F632214FB9A0007DD19 /* QZFullBackNavigationController.m in Sources */,
 				F086180B21BE489B00A2DA45 /* ViewController.m in Sources */,
 				F086181621BE489E00A2DA45 /* main.m in Sources */,
 				F086180821BE489B00A2DA45 /* AppDelegate.m in Sources */,
